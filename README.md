@@ -8,14 +8,14 @@ The site is alive over at https://uow.venuatu.me/ with the apis being hosted at 
 
 ## License
 
-The code in this repo is uses the [apache v2](LICENSE) license (unless otherwise stated in the file)
+The code in this repo is uses the [apache v2](LICENSE) license (unless noted otherwise in the file)
 
 Contact me if you would like a different license
 
-## [[Data]] [semver](http://semver.org/) 1.0.0
+## [Data](data) [semver](http://semver.org/) 1.0.0
 
 This provides the data in for the rest apis 
 
-## [[Site]] [semver](http://semver.org/) 1.0.0
+## [Site](site) [semver](http://semver.org/) 1.0.0
 
 This is a rather simple frontend for the above apis
