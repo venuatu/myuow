@@ -1,0 +1,106 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>My UoW</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- build:css({.tmp,myuow}) styles/main.css -->
+        <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css">
+        <!-- endbuild -->
+</head>
+<body ng-app="myuow">
+    <!--<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">My UoW</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#/">Home</a></li>
+                    <li><a href="#/about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    -->
+    <!--[if lt IE 9]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+    <div class="container ng-cloak">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="NavController">
+                <div class="well sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-title">My UoW</li>
+                        <li><a href="#/timetable">Timetable</a></li>
+                        <li><a href ng-click="moodle()">Moodle</a></li>
+                        <li><a href ng-click="logout()">Logout</a></li>
+                    </ul>
+                    <ul class="nav" ng-repeat="group in links">
+                        <li class="nav-title">{{ group.title }}</li>
+                        <li ng-repeat="link in group.links"><a href="{{ link.link }}" open-iframe>{{ link.title }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+                <div class="well" ng-view></div>
+            </div>    
+        </div>
+    </div>
+    <footer>
+        <p>My UoW | <a href="https://github.com/venuatu/myuow">source</a> | <a href="https://github.com/venuatu/myuow/issues">issues</a></p>
+    </footer>
+
+    <!-- build:js({.tmp,myuow}) scripts/jquery.js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <!-- endbuild -->
+    <!-- build:js({.tmp,myuow}) scripts/angular.js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <!-- endbuild -->
+    <!-- build:js({.tmp,myuow}) scripts/angularlibs.js -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <!-- endbuild -->
+    <!-- build:js({.tmp,myuow}) scripts/site.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/auth.js"></script>
+    <script src="scripts/directives/open-iframe.js"></script>
+    <script src="scripts/directives/bind-src.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/nav.js"></script>
+    <script src="scripts/controllers/frame.js"></script>
+    <script src="scripts/controllers/timetable.js"></script>
+    <script src="scripts/templates.js"></script>
+    <script>
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+         ga('create', 'UA-44496029-1', 'uow.venuatu.me');
+         ga('send', 'pageview');
+    </script>
+    <!-- endbuild -->
+</body>
+</html>

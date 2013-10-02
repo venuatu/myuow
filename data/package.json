@@ -1,0 +1,23 @@
+{
+  "name": "myuow-data",
+  "subdomain": "api",
+  "scripts": {
+    "deploy": "rsync -avz --delete --exclude node_modules --exclude config.js . uow.venuatu.me:myuow/;ssh uow.venuatu.me 'cd myuow; npm install; sleep 2; forever logs 0 | tail -30'"
+  },
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "restify": "latest",
+    "async": "latest",
+    "sequelize": "latest",
+    "sequelize-sqlite": "latest",
+    "sqlite3": "latest",
+    "qs": "latest",
+    "request": "latest",
+    "jsdom": "latest",
+    "extend": "latest",
+    "moment": "latest"
+  }
+}
