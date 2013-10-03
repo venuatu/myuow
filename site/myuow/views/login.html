@@ -11,7 +11,7 @@
                 <input type="password" class="form-control" placeholder="Password?" required ng-model="password">
                 <button class="btn btn-lg btn-block" type="submit" ng-class="{ 'btn-primary': !working && !reason, 'btn-default': working, 'btn-danger': !!reason }">Sign in</button>
             </form>
-            <p>BTW, we're using a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle</a> attack between your computer and sols because it's the only way</p>
+            <p>We use a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle</a> attack between your computer and sols because it's the only way and we do not store your password (see the source at <a href="https://github.com/venuatu/myuow/blob/master/data/database.js#L9">data/database.js</a> and <a href="https://github.com/venuatu/myuow/blob/master/data/routes/login.js#L15">data/routes/login.js</a>)</p>
 
         </div>    
     </div>

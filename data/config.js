@@ -1,4 +1,13 @@
 "use strict";
+function getCerts() {
+    var fs = require('fs'),
+        certs = [];
+    fs.readdirSync('sols_certs').forEach(function (v) {
+        console.log('Loading sols cert:', v);
+        certs.push(fs.readFileSync('./sols_certs/' + v));
+    });
+    return certs;
+}
 
 module.exports =  {
     port: 1111,
@@ -10,4 +19,5 @@ module.exports =  {
         storage: '/tmp/uow.sqlite',
         logging: false,
     },
+    solsCerts: getCerts()
 };
