@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myuow')
-.controller('TimetableController', function ($scope, $http, serverAddress) {
+.controller('TimetableController', function ($scope, $http, serverAddress, AuthService) {
 
     $scope.options = {
         header: {
@@ -15,6 +15,7 @@ angular.module('myuow')
         weekends: false,
         minTime: '7:00am',
         maxTime: '9:00pm',
+        height: 1000,
         columnFormat: {
           week: 'dddd'
         },
@@ -23,8 +24,8 @@ angular.module('myuow')
 
     $scope.$watch('auth.enticated', function (val) {
         if (val) {
-            $http.get(serverAddress + '/subject/enrolled?session=' + $scope.auth.id).then(function (data) {
-                $http.get(serverAddress + '/fullcalendar?subjects=' + data.data.join(',')).then(function (data) {
+            $http.get(serverAddress + '/subjects/enrolled?' + AuthService.getCredentials()).then(function (data) {
+                $http.get('https://myuow.me/api/fullcalendar?subjects=' + data.data.join(',')).then(function (data) {
                     $scope.events.length = 0;
                     $scope.events.push(data.data);
                 });

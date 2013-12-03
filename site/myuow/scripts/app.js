@@ -10,7 +10,7 @@ window.formPostEncode = function (obj) {
 
 
 angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ui.calendar', 'chieffancypants.loadingBar'])
-.constant('serverAddress', 'https://uow.venuatu.me/api')
+.constant('serverAddress', 'https://myuow.me/play')
 .config(function ($routeProvider) {
     $routeProvider
         .when('/frame/:page', {

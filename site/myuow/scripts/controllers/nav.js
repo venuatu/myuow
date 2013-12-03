@@ -3,14 +3,14 @@
 angular.module('myuow')
 .controller('NavController', function ($scope, $http, AuthService, serverAddress, $location) {
     $scope.moodle = function () {
-        window.open(serverAddress + '/moodle?session=' + $scope.auth.id, "_blank");
+        window.open(serverAddress + '/moodle?' + AuthService.getCredentials(), "_blank");
     };
     $scope.logout = function () {
         AuthService.logout();
     }
     $scope.$watch('auth.enticated', function (val, old) {
         if (val) {
-            $http.get(serverAddress + '/menu?session=' + $scope.auth.id).then(function (data) {
+            $http.get(serverAddress + '/yank/menu?' + AuthService.getCredentials()).then(function (data) {
                 $scope.links = data.data;
             });
 

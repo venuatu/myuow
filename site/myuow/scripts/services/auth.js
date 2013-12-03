@@ -5,44 +5,49 @@ angular.module('myuow')
 
     $rootScope.auth = {
         enticated: false,
-        id: '',
+        credentials: {},
         username: ''
     };
-    if (localStorage.id) {
-        $rootScope.auth.id = localStorage.id;
-        $rootScope.auth.username = localStorage.username;
-        $rootScope.auth.enticated = true;
-        $http.get(serverAddress + '/checkauth?session=' + $rootScope.auth.id).then(function (data) {
-        }, function (data) {
-        });
+    this.getCredentials = function () {
+        var creds = formPostEncode($rootScope.auth.credentials);
+        console.log(creds);
+        return creds;
     }
-
     this.login = function (username, password) {
         var q = $q.defer();
-        $http.post(serverAddress + "/login", {
+        $http.post(serverAddress + "/account/login", {
                 username: username,
                 password: password
         }).then(function (data) {
-            if (data.status === 201) {
+            if (data.status === 200) {
                 $rootScope.auth.enticated = true;
-                localStorage.id = $rootScope.auth.id = JSON.parse(data.data);
+                $rootScope.auth.credentials = data.data;
+                localStorage.credentials = JSON.stringify(data.data);
                 localStorage.username = $rootScope.auth.username = username;
                 q.resolve($rootScope.auth);
             } else {
                 q.reject(data);
             }
         }, function (data) {
-            data.data = JSON.parse(data.data);
+            data.data = data.data;
             q.reject(data);
         });
         return q.promise;
     };
     this.logout = function () {
-        delete localStorage.id;
+        delete localStorage.credentials;
         delete localStorage.username;
         $rootScope.auth.enticated = false;
         location.href = '#/';
         location.reload();
     }
 
+    if (localStorage.credentials) {
+        $rootScope.auth.credentials = JSON.parse(localStorage.credentials);
+        $rootScope.auth.username = localStorage.username;
+        $rootScope.auth.enticated = true;
+        $http.get(serverAddress + '/account/check?' + this.getCredentials()).then(function (data) {
+        }, function (data) {
+        });
+    }
 });
