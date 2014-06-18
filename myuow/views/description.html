@@ -1,0 +1,47 @@
+<div class="well">
+    <div class="form-group">
+        <label class="control-label" for="subject-code" >Search</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="subject-code" ng-model="code" autofocus>
+            <span class="input-group-addon glyphicon glyphicon-search"></span>
+        </div>
+    </div>
+</div>
+
+<div accordion class="subjects" close-others="false">
+    <div accordion-group heading="{{ subject.code }}: {{ subject.name }}" class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = $index === 0">
+        <div class="" ng-if="open">
+            <div ng-init="pullDescription(subject)">
+                <div class="course-info">
+                    <p>{{ descriptions[subject.id].information.points }} credit points</p>
+                    <p><strong>Pre-requisites</strong>: {{ descriptions[subject.id].information.prerequisites }}</p>
+                    <p><strong>Co-requisites</strong>: {{ descriptions[subject.id].information.corequisites }}</p>
+                    <p><strong>Equivalent</strong>: {{ descriptions[subject.id].information.equiv }}</p>
+                    <p><strong>Assessment</strong>: <br />{{ descriptions[subject.id].information.assessment }}</p>
+                </div>
+                <p><strong>Description</strong>: 
+                    <p class="description">{{ descriptions[subject.id].description }}</p>
+                    <div ng-repeat="item in descriptions[subject.id].extra" ng-switch="item.lastIndexOf(':') == (item.length -1)">
+                        <p ng-switch-when="true"><strong>{{ item }}</strong></p>
+                        <p ng-switch-default class="description">{{ item }}</p>
+                    </div>
+                </p>
+                <div class="desc-availability">
+                    <p><strong>Availability</strong>:</p>
+                    <ul class="course-info">
+                        <li ng-repeat="class in descriptions[subject.id].availability">
+                            <div><strong>Campus</strong>: {{ class.campus }}</div>
+                            <div><strong>Session</strong>: {{ class.session.name }} ({{ class.session.start | date:'MMM d' }} to {{ class.session.end | date:'MMM d' }} census: {{ class.session.census | date:'MMM d' }})</div>
+                            <div ng-if="class.lecturers.length"><strong>Lecturers</strong>: {{ class.lecturers.join(', ') }}</div>
+                            <div ng-if="class.lecturers.length"><strong>Coordinators</strong>: {{ class.coordinators.join(', ') }}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="well" ng-show="!subjects.length">
+    <strong>No results</strong>
+</div>

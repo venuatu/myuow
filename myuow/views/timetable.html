@@ -1,29 +1,33 @@
 <div class="well">
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="subject-code" >Subject Code</label>
-        <input type="text" class="form-control" id="subject-code" ng-model="code" autofocus>
+        <label class="control-label" for="subject-code" >Subject Code</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="subject-code" ng-model="code" autofocus>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        </div>
     </div>
 </div>
 
-<accordion class="subjects" close-others="false">
-    <accordion-group heading="{{ subject.code }}: {{ subject.name }} ({{ subject.session | lowercase }})" class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = $index === 0">
-        <div class="course-info" ng-if="open">
-            <div ng-init="pullSubject(subject.id)">
-                <p><strong>Coordinators</strong>: <span ng-repeat="coordinator in subjectData[subject.id].coordinators">{{ coordinator }}{{$last ? '' : ', '}}</span></p>
-                <p><strong>Lecturers</strong>: <span ng-repeat="lecturer in subjectData[subject.id].lecturers track by $index">{{ lecturer }}{{$last ? '' : ', '}}</span></p>
+<div accordion class="subjects" close-others="false">
+    <div accordion-group heading="{{ subject.code }}: {{ subject.name }} ({{ subject.session | lowercase }})" class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = $index === 0">
+        <div ng-if="open">
+            <div class="course-info" ng-init="pullSubject(subject.id)">
                 <p>{{ subjectData[subject.id].points }} credit points</p>
+                <p><strong>Lecturers</strong>: {{ subjectData[subject.id].lecturers.join(', ') }}</p>
+                <p><strong>Coordinators</strong>: {{ subjectData[subject.id].coordinators.join(', ') }}</p>
+                <p><strong>Tutors</strong>: {{ subjectData[subject.id].tutors.join(', ') }}</p>
                 <div ng-repeat="class in subjectData[subject.id].classes">
                     <strong>{{ class.name }}</strong>
                     <ul>
                         <li ng-repeat="entry in class.classes">
-                            {{ entry.day }} {{ entry.start }} - {{ entry.finish }} at {{ entry.location }}, weeks: {{ entry.week | lowercase }}
+                            {{ entry.day }} {{ entry.start }} to {{ entry.finish }} at {{ entry.location }}, weeks: {{ entry.week | lowercase }}
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-    </accordion-group>
-</accordion>
+    </div>
+</div>
 
 <div class="well" ng-show="!subjects.length">
     <strong>No results</strong>

@@ -17,7 +17,7 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
             templateUrl: 'views/frame.html',
             controller: 'FrameController'
         })
-        .when('/description/:code', {
+        .when('/description/:year/:code', {
             templateUrl: 'views/description.html',
             controller: 'DescriptionController'
         })
@@ -33,11 +33,13 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
         });
 })
 .config(function ($httpProvider) {  
-    $httpProvider.interceptors.push(["$q", "$injector", function ($q, $injector) {
+    $httpProvider.interceptors.push(["$q", "$injector", "FlashService", function ($q, $injector, FlashService) {
         return {
             responseError: function (response) {
                 if (response.status === 401) {
                     $injector.get('AuthService').logout();
+                } else if (response.status === 500) {
+                    FlashService.add('An error occurred', 'danger')
                 }
                 return $q.reject(response);
             }

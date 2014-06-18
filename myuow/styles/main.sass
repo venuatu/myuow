@@ -1,5 +1,4 @@
-$iconSpritePath: "../images/glyphicons-halflings.png"
-$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png"
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/"
 
 @import "bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/bootstrap"
 
@@ -19,11 +18,21 @@ footer
     padding-left: 15px
     padding-right: 15px
 
+h1, h2, h3
+    margin: 0
+    text-align: center
+
+ul
+    padding-left: 2em
+
 .sidebar-nav
     padding: 9px 0
 
 div[ng-view]
     padding: 0
+
+.description
+    white-space: pre-wrap
 
 .modal
     display: block
@@ -70,6 +79,9 @@ div[ng-view]
     margin: 0
     border-radius: $border-radius-base
 
+.desc-availability li
+    margin-bottom: 10px
+
 .nav > li > a
     padding-top: .2em
     padding-bottom: .2em
@@ -82,11 +94,30 @@ div[ng-view]
     font-weight: bold
 
 .course-info
+    padding: 0
     column-count: 2
-    column-gap: 10px    
+    column-gap: 10px
 
-.alert
-    margin-bottom: 0
+    > *
+        page-break-inside: avoid
+        -webkit-column-break-inside: avoid
+        break-inside: avoid-column
+
+    > li
+        list-style-type: none
+
+#flashes
+    position: fixed
+    z-index: 2000
+    right: 0
+    bottom: 0
+    margin: .5em
+
+#flashes > *
+    margin: .2em
+    float: right
+    clear: both
+    padding: .5em 1em
 
 @media screen and (max-width: 768px)
     .row-offcanvas
