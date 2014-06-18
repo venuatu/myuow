@@ -1,21 +1,27 @@
-# My UoW
+# My UoW frontend [semver](http://semver.org/) 1.0.0
 
-This is a project to liberate data from sols and provide it in a fast and easily accessible format without the marketing of the main UoW site
+This is built with angularjs, bootstrap, angular-bootstrap, 
 
-If you have a problem or would like to suggest something open an issue =]
+## Requirements
 
-The site is alive over at https://uow.venuatu.me/ with the apis being hosted at https://uow.venuatu.me/api/
+compass (ruby, rubygems)
+nodejs v0.10 (npm)
 
-## License
+## Building
 
-The code in this repo is uses the [apache v2](LICENSE) license (unless noted otherwise in the file)
+You should change the serverAddress constant in [[app/scripts/app.js]] to the place that hosts the data apis
 
-Contact me if you would like a different license
+~~~~~sh
 
-## [Data](data) [semver](http://semver.org/) 1.0.0
+gem install compass
+npm install -g grunt-cli bower
+git clone https://github.com/venuatu/myuow
+cd myuow/data/
+npm install
+bower install
+grunt server
 
-This provides the data in for the rest apis 
+# or build it with
+grunt
 
-## [Site](site) [semver](http://semver.org/) 1.0.0
-
-This is a rather simple frontend for the above apis
+~~~~~
