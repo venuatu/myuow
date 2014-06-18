@@ -1,0 +1,18 @@
+<div class="modal-dialog" id="terms-modal">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="panel panel-default" ng-repeat="term in terms">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ term.title }}</h3>
+                </div>
+                <div class="panel-body" ng-bind-html="term.content">
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="$dismiss()">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="$close()">I Understand</button>
+        </div>
+    </div>
+</div>
