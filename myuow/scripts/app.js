@@ -17,11 +17,11 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
             templateUrl: 'views/frame.html',
             controller: 'FrameController'
         })
-        .when('/description/:year/:code', {
+        .when('/descriptions/:year/:code', {
             templateUrl: 'views/description.html',
             controller: 'DescriptionController'
         })
-        .when('/timetable/:year/:code', {
+        .when('/timetables/:year/:code', {
             templateUrl: 'views/timetable.html',
             controller: 'TimetableController'
         })
@@ -29,7 +29,7 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
             templateUrl: 'views/about.html'
         })
         .otherwise({
-            redirectTo: '/timetable/'+ (new Date()).getFullYear() +'/CSCI'
+            redirectTo: '/timetables/'+ (new Date()).getFullYear() +'/CSCI'
         });
 })
 .config(function ($httpProvider) {  

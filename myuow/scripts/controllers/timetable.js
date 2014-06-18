@@ -21,7 +21,7 @@ angular.module('myuow')
 
     var movePage = _.debounce(function () {
         if (($scope.code != params.code || $scope.year != params.year) && $scope.code && $scope.year) {
-            $location.path('/timetable/'+ $scope.year +'/'+ $scope.code);
+            $location.path('/timetables/'+ $scope.year +'/'+ $scope.code);
             $scope.$apply();
         }
     }, 500);

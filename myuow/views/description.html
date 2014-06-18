@@ -13,12 +13,12 @@
         <div class="" ng-if="open">
             <div ng-init="pullDescription(subject)">
                 <div class="course-info">
-                    <p>{{ descriptions[subject.id].information.points }} credit points</p>
                     <p><strong>Pre-requisites</strong>: {{ descriptions[subject.id].information.prerequisites }}</p>
                     <p><strong>Co-requisites</strong>: {{ descriptions[subject.id].information.corequisites }}</p>
+                    <p>{{ descriptions[subject.id].information.points }} credit points</p>
                     <p><strong>Equivalent</strong>: {{ descriptions[subject.id].information.equiv }}</p>
-                    <p><strong>Assessment</strong>: <br />{{ descriptions[subject.id].information.assessment }}</p>
                 </div>
+                <p><strong>Assessment</strong>: <br />{{ descriptions[subject.id].information.assessment }}</p>
                 <p><strong>Description</strong>: 
                     <p class="description">{{ descriptions[subject.id].description }}</p>
                     <div ng-repeat="item in descriptions[subject.id].extra" ng-switch="item.lastIndexOf(':') == (item.length -1)">
