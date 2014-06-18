@@ -6,12 +6,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>My UoW</title>
+        <title>My UOW</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 
         <!-- build:css({.tmp,myuow}) styles/main.css -->
-        <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css">
         <!-- endbuild -->
@@ -47,8 +46,8 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="NavController">
                 <div class="well sidebar-nav">
                     <ul class="nav">
-                        <li class="nav-title">My UoW</li>
-                        <li><a href="#/timetable">Timetable</a></li>
+                        <li class="nav-title">My UOW</li>
+                        <li ng-class="{'active': location.indexOf('/timetable') === 0}"><a href="#/timetable/{{ currentYear }}/CSCI">Timetables</a></li>
                         <li><a href ng-click="moodle()">Moodle</a></li>
                         <li><a href ng-click="logout()">Logout</a></li>
                     </ul>
@@ -59,7 +58,7 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-9">
-                <div class="well" ng-view></div>
+                <div ng-view></div>
             </div>    
         </div>
     </div>
@@ -67,21 +66,17 @@
         <p>My UoW | <a href="https://github.com/venuatu/myuow">source</a> | <a href="https://github.com/venuatu/myuow/issues">issues</a></p>
     </footer>
 
-    <!-- build:js({.tmp,myuow}) scripts/jquery.js -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <!-- endbuild -->
     <!-- build:js({.tmp,myuow}) scripts/angular.js -->
     <script src="bower_components/angular/angular.js"></script>
     <!-- endbuild -->
-    <!-- build:js({.tmp,myuow}) scripts/angularlibs.js -->
+    <!-- build:js({.tmp,myuow}) scripts/libs.js -->
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
-    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,myuow}) scripts/site.js -->
     <script src="scripts/app.js"></script>

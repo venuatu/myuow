@@ -41,13 +41,25 @@ angular.module('myuow')
         location.href = '#/';
         location.reload();
     }
+    this.ensureLogin = function () {
+        var modal = $modal.open({
+            templateUrl: 'views/login.html',
+            controller: 'LoginController',
+            backdrop: 'static',
+        });
+        var ticket = $rootScope.$watch('auth.enticated', function (val, old) {
+            if (val) {
+                modal.close();
+                ticket();
+            }
+        });
+    }
 
     if (localStorage.credentials) {
+        var self = this;
         $rootScope.auth.credentials = JSON.parse(localStorage.credentials);
         $rootScope.auth.username = localStorage.username;
         $rootScope.auth.enticated = true;
-        $http.get(serverAddress + '/account/check?' + this.getCredentials()).then(function (data) {
-        }, function (data) {
-        });
+        $http.get(serverAddress + '/account/check?' + this.getCredentials()).then(angular.noop);
     }
 });

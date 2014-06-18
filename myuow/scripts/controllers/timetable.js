@@ -1,35 +1,29 @@
 'use strict';
 
 angular.module('myuow')
-.controller('TimetableController', function ($scope, $http, serverAddress, AuthService) {
+.controller('TimetableController', function ($scope, $routeParams, $location, $http, serverAddress, AuthService) {
+    var params = $routeParams;
+    angular.extend($scope, params);
+    $http.get(serverAddress +'timetable/search/' + params.code +'?year='+ params.year).then(function (data) {
+        $scope.subjects = data.data;
+    });
 
-    $scope.options = {
-        header: {
-            left: 'none',
-            center: 'none',
-            right: 'none'
-        },
-        defaultView: 'agendaWeek',
-        editable: false,
-        allDaySlot: false,
-        weekends: false,
-        minTime: '7:00am',
-        maxTime: '9:00pm',
-        height: 1000,
-        columnFormat: {
-          week: 'dddd'
-        },
+    $scope.subjectData = {};
+    $scope.pullSubject = function (id) {
+        $http.get(serverAddress +'timetable/id/' + id).then(function (data) {
+            var classes = data.data.classes;
+            data.data.classes = _.sortBy(_.map(classes, function (classes, name) { return {name: name, classes: classes}; }), 'name');
+            $scope.subjectData[id] = data.data;
+        });
     };
-    $scope.events = [];
 
-    $scope.$watch('auth.enticated', function (val) {
-        if (val) {
-            $http.get(serverAddress + '/subjects/enrolled?' + AuthService.getCredentials()).then(function (data) {
-                $http.get('https://myuow.me/api/fullcalendar?subjects=' + data.data.join(',')).then(function (data) {
-                    $scope.events.length = 0;
-                    $scope.events.push(data.data);
-                });
-            });
+    var movePage = _.debounce(function () {
+        if (($scope.code != params.code || $scope.year != params.year) && $scope.code && $scope.year) {
+            $location.path('/timetable/'+ $scope.year +'/'+ $scope.code);
+            $location.replace();
+            $scope.$apply();
         }
-    })
+    }, 500);
+    $scope.$watch('code', movePage);
+    $scope.$watch('year', movePage);
 });

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('myuow')
-.controller('FrameController', function ($scope, $routeParams, serverAddress) {
+.controller('FrameController', function ($scope, $routeParams, serverAddress, AuthService) {
+    AuthService.ensureLog
     if ($routeParams.page === undefined) {
         $routeParams.page = '/404';
         /*serverAddress + "/yank?" + formPostEncode({

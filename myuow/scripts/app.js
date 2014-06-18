@@ -9,15 +9,19 @@ window.formPostEncode = function (obj) {
 }
 
 
-angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ui.calendar', 'chieffancypants.loadingBar'])
-.constant('serverAddress', 'https://myuow.me/play')
+angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'angular-loading-bar'])
+.constant('serverAddress', 'https://myuow.me/api/')
 .config(function ($routeProvider) {
     $routeProvider
         .when('/frame/:page', {
             templateUrl: 'views/frame.html',
             controller: 'FrameController'
         })
-        .when('/timetable', {
+        .when('/description/:code', {
+            templateUrl: 'views/description.html',
+            controller: 'DescriptionController'
+        })
+        .when('/timetable/:year/:code', {
             templateUrl: 'views/timetable.html',
             controller: 'TimetableController'
         })
@@ -25,7 +29,7 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ui.
             templateUrl: 'views/about.html'
         })
         .otherwise({
-            redirectTo: '/timetable'
+            redirectTo: '/timetable/'+ (new Date()).getFullYear() +'/CSCI'
         });
 })
 .config(function ($httpProvider) {  
@@ -43,19 +47,9 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ui.
 .config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
 })
-.run(function ($rootScope, $modal, AuthService) {
-    if (!$rootScope.auth.enticated) {
-        var modal = $modal.open({
-            templateUrl: 'views/login.html',
-            controller: 'LoginController',
-            backdrop: 'static',
-            keyboard: false
-        });
-        $rootScope.$watch('auth.enticated', function (val, old) {
-            if (val) {
-                modal.close();
-            }
-        });
-    }
+.run(function ($rootScope, $location) {
+    $rootScope.$on('$routeChangeSuccess', function () {
+        $rootScope.location = $location.path();
+    });
 })
 ;
