@@ -51,8 +51,9 @@
                         <li class="nav-title">My UOW</li>
                         <li ng-class="{'active': location.indexOf('/description') === 0}"><a href="#/descriptions/{{ currentYear }}/CSCI">Descriptions</a></li>
                         <li ng-class="{'active': location.indexOf('/timetable') === 0}"><a href="#/timetables/{{ currentYear }}/CSCI">Timetables</a></li>
-                        <li><a href ng-click="moodle()">Moodle</a></li>
-                        <li><a href ng-click="logout()">Logout</a></li>
+                        <li ng-if="auth.enticated"><a href ng-click="moodle()">Moodle</a></li>
+                        <li ng-if="auth.enticated"><a href ng-click="logout()">Logout</a></li>
+                        <li ng-if="!auth.enticated"><a href ng-click="login()">Login</a></li>
                     </ul>
                     <ul class="nav" ng-repeat="group in links">
                         <li class="nav-title">{{ group.title }}</li>
@@ -96,15 +97,10 @@
     <script src="scripts/controllers/description.js"></script>
     <script src="scripts/controllers/timetable.js"></script>
     <script src="scripts/templates.js"></script>
-    <script>
-         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-         ga('create', 'UA-44496029-1', 'uow.venuatu.me');
-         ga('send', 'pageview');
-    </script>
     <!-- endbuild -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-51944658-2', 'myuow.me');
+    </script>
 </body>
 </html>

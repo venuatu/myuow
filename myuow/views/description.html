@@ -1,11 +1,11 @@
 <div class="well">
-    <div class="form-group">
+    <form class="form-group" ng-submit="search(code)">
         <label class="control-label" for="subject-code" >Search</label>
         <div class="input-group">
-            <input type="text" class="form-control" id="subject-code" ng-model="code" autofocus>
-            <span class="input-group-addon glyphicon glyphicon-search"></span>
+            <input type="search" class="form-control" id="subject-code" ng-model="code" autofocus>
+            <span class="input-group-btn"><button class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search</button></span>
         </div>
-    </div>
+    </form>
 </div>
 
 <div accordion class="subjects" close-others="false">
@@ -18,7 +18,7 @@
                     <p>{{ descriptions[subject.id].information.points }} credit points</p>
                     <p><strong>Equivalent</strong>: {{ descriptions[subject.id].information.equiv }}</p>
                 </div>
-                <p><strong>Assessment</strong>: <br />{{ descriptions[subject.id].information.assessment }}</p>
+                <p><strong>Assessment</strong>: {{ descriptions[subject.id].information.assessment }}</p>
                 <p><strong>Description</strong>: 
                     <p class="description">{{ descriptions[subject.id].description }}</p>
                     <div ng-repeat="item in descriptions[subject.id].extra" ng-switch="item.lastIndexOf(':') == (item.length -1)">
@@ -30,8 +30,8 @@
                     <p><strong>Availability</strong>:</p>
                     <ul class="course-info">
                         <li ng-repeat="class in descriptions[subject.id].availability">
-                            <div><strong>Campus</strong>: {{ class.campus }}</div>
-                            <div><strong>Session</strong>: {{ class.session.name }} ({{ class.session.start | date:'MMM d' }} to {{ class.session.end | date:'MMM d' }} census: {{ class.session.census | date:'MMM d' }})</div>
+                            <div><strong>{{ class.campus }}: {{ class.session.name }}</strong></div>
+                            <div>{{ class.session.start | date:'MMMM d' }} to {{ class.session.end | date:'MMMM d' }} (census: {{ class.session.census | date:'MMMM d' }})</div>
                             <div ng-if="class.lecturers.length"><strong>Lecturers</strong>: {{ class.lecturers.join(', ') }}</div>
                             <div ng-if="class.lecturers.length"><strong>Coordinators</strong>: {{ class.coordinators.join(', ') }}</div>
                         </li>

@@ -4,7 +4,7 @@ angular.module('myuow')
 .controller('DescriptionController', function ($scope, $routeParams, $location, $http, serverAddress) {
     var params = $routeParams;
     angular.extend($scope, params);
-    $http.get(serverAddress +'description/search/'+ params.code +'?year='+ params.year).then(function (data) {
+    $http.get(serverAddress +'descriptions/search/'+ params.code +'?year='+ params.year).then(function (data) {
         $scope.subjects = data.data;
     });
 
@@ -14,21 +14,21 @@ angular.module('myuow')
 
     $scope.descriptions = {};
     $scope.pullDescription = function (subject) {
-        $http.get(subject.url.replace('http:', 'https:')).then(function (data) {
-            data.data.description = addNewlines(data.data.description);
-            data.data.extra = _.map(data.data.extra, addNewlines);
-
-            $scope.descriptions[subject.id] = data.data;
-        });
+        if (!$scope.descriptions[subject.id]) {
+            $http.get(subject.url.replace('http:', 'https:')).then(function (data) {
+                data.data.description = addNewlines(data.data.description);
+                data.data.extra = _.map(data.data.extra, addNewlines);
+                _.each(data.data.availability, function (item) {
+                    item.session.name = item.session.name.replace(item.campus, '').replace(/(DXB UG|SIM|INTI Penang)/, '').trim();
+                });
+                $scope.descriptions[subject.id] = data.data;
+            });
+        }
     };
 
-    var movePage = _.debounce(function () {
-        if (($scope.code != params.code || $scope.year != params.year) && $scope.code && $scope.year) {
-            $location.path('/descriptions/'+ $scope.year +'/'+ $scope.code);
-            $scope.$apply();
+    $scope.search = function (code) {
+        if ((code !== params.code || year !== params.year) && code) {
+            $location.path('/descriptions/'+ params.year +'/'+ code);
         }
-    }, 500);
-    $scope.$watch('code', movePage);
-    $scope.$watch('year', movePage);
-
+    };
 });

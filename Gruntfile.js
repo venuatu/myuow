@@ -217,6 +217,18 @@ module.exports = function (grunt) {
         dirs: ['<%= yeoman.dist %>']
       }
     },
+    compress: {
+      dist: {
+        options: {
+          mode: 'gzip',
+          level: 9
+        },
+        expand: true,
+        cwd: 'dist/',
+        src: ['*', '**/*'],
+        dest: 'dist/'
+      },
+    },
     imagemin: {
       dist: {
         files: [{
@@ -333,7 +345,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>/scripts',
-          src: '*.js',
+          src: 'site.js',
           dest: '<%= yeoman.dist %>/scripts'
         }]
       }
@@ -382,7 +394,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'compress'
   ]);
 
   grunt.registerTask('default', [

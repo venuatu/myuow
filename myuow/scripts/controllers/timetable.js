@@ -19,12 +19,9 @@ angular.module('myuow')
         }
     };
 
-    var movePage = _.debounce(function () {
-        if (($scope.code != params.code || $scope.year != params.year) && $scope.code && $scope.year) {
-            $location.path('/timetables/'+ $scope.year +'/'+ $scope.code);
-            $scope.$apply();
+    $scope.search = function (code, year) {
+        if ((code != params.code || year != params.year) && code) {
+            $location.path('/timetables/'+ params.year +'/'+ code);
         }
-    }, 500);
-    $scope.$watch('code', movePage);
-    $scope.$watch('year', movePage);
+    };
 });

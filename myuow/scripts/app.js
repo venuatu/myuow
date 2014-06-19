@@ -29,7 +29,7 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
             templateUrl: 'views/about.html'
         })
         .otherwise({
-            redirectTo: '/timetables/'+ (new Date()).getFullYear() +'/CSCI'
+            redirectTo: '/descriptions/'+ (new Date()).getFullYear() +'/CSCI'
         });
 })
 .config(function ($httpProvider) {  
@@ -52,6 +52,7 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
 .run(function ($rootScope, $location) {
     $rootScope.$on('$routeChangeSuccess', function () {
         $rootScope.location = $location.path();
+        ga('send', 'pageview', { page: $location.path() });
     });
 })
 ;

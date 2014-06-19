@@ -5,6 +5,9 @@ angular.module('myuow')
     $rootScope.moodle = function () {
         window.open(serverAddress + '/moodle?' + AuthService.getCredentials(), "_blank");
     };
+    $rootScope.login = function () {
+        AuthService.ensureLogin();
+    }
     $rootScope.logout = function () {
         AuthService.logout();
     }

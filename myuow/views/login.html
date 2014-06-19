@@ -1,16 +1,9 @@
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="form-signin-heading">Please sign in</h2>
-        </div>
-        <div class="modal-body">
-            <div ng-show="!!reason" class="alert alert-danger">{{ reason }}</div>
-            <form class="form-signin form-group" ng-class="{ 'has-error': failed }" ng-submit="login(username, password)">
-                <input type="text" class="form-control" placeholder="Username? (ab812)" required autofocus ng-model="username">
-                <input type="password" class="form-control" placeholder="Password?" required ng-model="password">
-                <button class="btn btn-lg btn-block" type="submit" ng-class="{ 'btn-primary': !working && !reason, 'btn-default': working, 'btn-danger': !!reason }">Sign in</button>
-            </form>
-            <p>We use a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle attack</a> between your computer and sols because it's the only way and we do not store your password (see the source at <a href="https://github.com/venuatu/myuow-data/blob/master/app/controllers/Account.scala#L17-L34">controllers/Account.scala</a>)</p>
-        </div>
-    </div>
+<div class="modal-body">
+    <div ng-show="!!reason" class="alert alert-danger">{{ reason }}</div>
+    <form class="form-signin form-group" ng-class="{ 'has-error': failed }" ng-submit="login(username, password)">
+        <input type="text" class="form-control" placeholder="Username? (ab812)" required autofocus ng-model="username">
+        <input type="password" class="form-control" placeholder="Password?" required ng-model="password">
+        <button class="btn btn-lg btn-block" type="submit" ng-class="{ 'btn-primary': !working && !reason, 'btn-default': working, 'btn-danger': !!reason }">Login</button>
+    </form>
+    <p>We use a <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle attack</a> between your computer and sols because it's the only way and we do not store your password (see the source at <a href="https://github.com/venuatu/myuow-data/blob/master/app/controllers/Account.scala#L17-L34">controllers/Account.scala</a>)</p>
 </div>

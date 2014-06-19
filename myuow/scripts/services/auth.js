@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myuow')
-.service('AuthService', function ($rootScope, $q, $http, serverAddress, $location) {
+.service('AuthService', function ($rootScope, $q, $http, serverAddress, $location, $modal) {
 
     $rootScope.auth = {
         enticated: false,
@@ -45,7 +45,6 @@ angular.module('myuow')
         var modal = $modal.open({
             templateUrl: 'views/login.html',
             controller: 'LoginController',
-            backdrop: 'static',
         });
         var ticket = $rootScope.$watch('auth.enticated', function (val, old) {
             if (val) {
