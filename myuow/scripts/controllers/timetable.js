@@ -4,14 +4,14 @@ angular.module('myuow')
 .controller('TimetableController', function ($scope, $routeParams, $location, $http, serverAddress) {
     var params = $routeParams;
     angular.extend($scope, params);
-    $http.get(serverAddress +'timetable/search/' + params.code +'?year='+ params.year).then(function (data) {
+    $http.get(serverAddress +'timetables/search/' + params.code +'?year='+ params.year).then(function (data) {
         $scope.subjects = data.data;
     });
 
     $scope.subjectData = {};
     $scope.pullSubject = function (id) {
         if (!$scope.subjectData[id]) {
-            $http.get(serverAddress +'timetable/id/' + id).then(function (data) {
+            $http.get(serverAddress +'timetables/id/' + id).then(function (data) {
                 var classes = data.data.classes;
                 data.data.classes = _.sortBy(_.map(classes, function (classes, name) { return {name: name, classes: classes}; }), 'name');
                 $scope.subjectData[id] = data.data;
