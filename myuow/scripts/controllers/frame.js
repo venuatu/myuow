@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('myuow')
-.controller('FrameController', function ($scope, $routeParams, serverAddress, AuthService) {
+.controller('FrameController', function ($scope, $stateParams, serverAddress, AuthService) {
     AuthService.ensureLog
-    if ($routeParams.page === undefined) {
-        $routeParams.page = '/404';
+    if ($stateParams.page === undefined) {
+        $stateParams.page = '/404';
         /*serverAddress + "/yank?" + formPostEncode({
             session: $scope.auth.id,
             authLower: true,
@@ -15,6 +15,6 @@ angular.module('myuow')
     }
 
     $scope.$watch('auth.enticated', function (val) {
-        $scope.page = $routeParams.page;        
+        $scope.page = $stateParams.page;        
     });
 });

@@ -17,40 +17,21 @@
         <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Droid+Sans:400,700'>
 </head>
 <body ng-app="myuow">
-    <!--<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">My UoW</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#/">Home</a></li>
-                    <li><a href="#/about">About</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    -->
-    <div class="container ng-cloak">
+    <div class="container">
     <!--[if lt IE 9]>
-        <div class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+        <div class="alert alert-danger">This site doesn't work in this browser try using <a href="http://browsehappy.com/">a different one</a></div>
         <script src="bower_components/es5-shim/es5-shim.js"></script>
         <script src="bower_components/html5shiv/dist/html5shiv.js"></script>
         <script src="bower_components/json3/lib/json3.min.js"></script>
         <script src="bower_components/respond/dest/respond.src.js"></script>
     <![endif]-->
-        <div class="row row-offcanvas row-offcanvas-right">
+        <div class="row row-offcanvas row-offcanvas-right ng-cloak">
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="NavController">
                 <div class="well sidebar-nav">
                     <ul class="nav">
                         <li class="nav-title">My UOW</li>
-                        <li ng-class="{'active': location.indexOf('/description') === 0}"><a href="#/descriptions/{{ currentYear }}/CSCI">Descriptions</a></li>
-                        <li ng-class="{'active': location.indexOf('/timetable') === 0}"><a href="#/timetables/{{ currentYear }}/CSCI">Timetables</a></li>
+                        <li ui-sref-active="active"><a ui-sref="descriptions">Descriptions</a></li>
+                        <li ui-sref-active="active"><a ui-sref="timetables">Timetables</a></li>
                         <li ng-if="auth.enticated"><a href ng-click="moodle()">Moodle</a></li>
                         <li ng-if="auth.enticated"><a href ng-click="logout()">Logout</a></li>
                         <li ng-if="!auth.enticated"><a href ng-click="login()">Login</a></li>
@@ -61,13 +42,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-9">
-                <div ng-view></div>
+            <div class="col-xs-12 col-md-9 ng-cloak">
+                <div ui-view></div>
             </div>    
         </div>
     </div>
     <footer>
-        <p>My UOW | <a href="https://github.com/venuatu/myuow-data">source</a> | <a href="https://github.com/venuatu/myuow-data/issues">issues</a></p>
+        <p>My UOW (not endorsed at all by UOW) | <a href="https://github.com/venuatu/myuow">source</a> | <a href="https://github.com/venuatu/myuow/issues">issues</a></p>
     </footer>
     <div id="flashes" class="ng-cloak">
         <div ng-repeat="flash in flashes" class="alert alert-{{flash.level}}" ng-click="popflash($index)">{{ flash.message }}</div>
@@ -78,24 +59,17 @@
     <!-- endbuild -->
     <!-- build:js({.tmp,myuow}) scripts/libs.js -->
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/traceur-runtime/traceur-runtime.js"></script>
     <script src="bower_components/lodash/dist/lodash.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/collapse.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <!-- endbuild -->
-    <!-- build:js({.tmp,myuow}) scripts/site.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/services/auth.js"></script>
-    <script src="scripts/services/flash.js"></script>
-    <script src="scripts/directives/open-iframe.js"></script>
-    <script src="scripts/directives/bind-src.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/nav.js"></script>
-    <script src="scripts/controllers/frame.js"></script>
-    <script src="scripts/controllers/description.js"></script>
-    <script src="scripts/controllers/timetable.js"></script>
+    <!-- build:js(.tmp) scripts/site.js -->
+    <script src="scripts/build.js"></script>
     <script src="scripts/templates.js"></script>
     <!-- endbuild -->
     <script>

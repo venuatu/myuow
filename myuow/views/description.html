@@ -1,5 +1,5 @@
 <div class="well">
-    <form class="form-group" ng-submit="search(code)">
+    <form ng-submit="search(code)">
         <label class="control-label" for="subject-code" >Search</label>
         <div class="input-group">
             <input type="search" class="form-control" id="subject-code" ng-model="code" autofocus>
@@ -9,8 +9,9 @@
 </div>
 
 <div accordion class="subjects" close-others="false">
-    <div accordion-group heading="{{ subject.code }}: {{ subject.name }}" class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = $index === 0">
-        <div class="" ng-if="open">
+    <div accordion-group class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = !$index">
+        <div accordion-heading>{{ subject.code }}: {{ subject.name }}</div>
+        <div ng-if="open || descriptions[subject.id]">
             <div ng-init="pullDescription(subject)">
                 <div class="course-info">
                     <p><strong>Pre-requisites</strong>: {{ descriptions[subject.id].information.prerequisites }}</p>
@@ -42,6 +43,6 @@
     </div>
 </div>
 
-<div class="well" ng-show="!subjects.length">
+<div class="well" ng-show="subjects && !subjects.length">
     <strong>No results</strong>
 </div>

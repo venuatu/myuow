@@ -29,13 +29,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
+      traceur: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        tasks: ['traceur']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -72,7 +68,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: '*'
+        hostname: '0.0.0.0'
       },
       livereload: {
         options: {
@@ -177,6 +173,29 @@ module.exports = function (grunt) {
         }
       }
     },
+    traceur: {
+      options: {
+          experimental: true,
+          sourceMap: true,
+          modules: 'inline',
+      },
+      compile: {
+          files: {
+              '.tmp/scripts/build.js': ['<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/**/*.js']
+          }
+      }
+    },
+    uncss: {
+      dist: {
+        options: {
+          htmlroot: 'dist/',
+          ignore: [/^h/, /^\.panel/, /^\.accordion/, /^\.collaps/, /^\.active/],
+        },
+        files: {
+          'dist/styles/main.css': ['dist/index.html', 'dist/views/*.html']
+        }
+      }
+    },
     ngtemplates:  {
       myuow: {
         cwd: '<%= yeoman.app %>',
@@ -225,7 +244,7 @@ module.exports = function (grunt) {
         },
         expand: true,
         cwd: 'dist/',
-        src: ['*', '**/*'],
+        src: ['*', '*/*'],
         dest: 'dist/'
       },
     },
@@ -314,7 +333,7 @@ module.exports = function (grunt) {
     },
     concurrent: {
       server: [
-        'coffee:dist',
+        'traceur',
         'compass:server',
         'copy:styles'
       ],
@@ -326,6 +345,7 @@ module.exports = function (grunt) {
         'compass:dist',
         'copy:styles',
         'imagemin',
+        'traceur',
         'htmlmin'
       ]
     },

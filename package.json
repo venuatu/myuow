@@ -27,6 +27,7 @@
     "grunt-open": "~0.2.0",
     "grunt-rev": "~0.1.0",
     "grunt-svgmin": "~0.2.0",
+    "grunt-traceur-compiler": "0.0.44",
     "grunt-uncss": "^0.3.4",
     "grunt-usemin": "~0.1.11",
     "karma": "~0.10.2",

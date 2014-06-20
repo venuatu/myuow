@@ -1,6 +1,6 @@
 <div class="well">
-    <form class="form-group" ng-submit="search(code)">
-        <label class="control-label" for="subject-code" >Subject Code</label>
+    <form ng-submit="search(code)">
+        <label class="control-label" for="subject-code" >Subject code</label>
         <div class="input-group">
             <input type="search" class="form-control" id="subject-code" ng-model="code" autofocus>
             <span class="input-group-btn"><button class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search</button></span>
@@ -9,7 +9,8 @@
 </div>
 
 <div accordion class="subjects" close-others="false">
-    <div accordion-group heading="{{ subject.code }}: {{ subject.name }} ({{ subject.session | lowercase }})" class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = $index === 0">
+    <div accordion-group class="subject" ng-repeat="subject in subjects" is-open="open" ng-init="open = !$index">
+        <div accordion-heading>{{ subject.code }}: {{ subject.name }} ({{ subject.session | lowercase }})</div>
         <div ng-if="open">
             <div class="course-info" ng-init="pullSubject(subject.id)">
                 <p>{{ subjectData[subject.id].points }} credit points</p>
@@ -29,6 +30,6 @@
     </div>
 </div>
 
-<div class="well" ng-show="!subjects.length">
+<div class="well" ng-show="subjects && !subjects.length">
     <strong>No results</strong>
 </div>

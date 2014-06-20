@@ -1,36 +1,40 @@
 'use strict';
 
 window.formPostEncode = function (obj) {
-    var output = "";
-    for (var member in obj) {
-        output += encodeURIComponent(member) + "=" + encodeURIComponent(obj[member]) + "&";
-    }
-    return output.slice(0, -1);
+    return _(obj).map((value, key) =>
+        encodeURIComponent(key) + "=" + encodeURIComponent(value)
+    ).join('&');
 }
 
-
-angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'angular-loading-bar'])
+angular.module('myuow', ['ui.router', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'angular-loading-bar'])
 .constant('serverAddress', 'https://myuow.me/api/')
-.config(function ($routeProvider) {
-    $routeProvider
-        .when('/frame/:page', {
-            templateUrl: 'views/frame.html',
-            controller: 'FrameController'
-        })
-        .when('/descriptions/:year/:code', {
-            templateUrl: 'views/description.html',
-            controller: 'DescriptionController'
-        })
-        .when('/timetables/:year/:code', {
-            templateUrl: 'views/timetable.html',
-            controller: 'TimetableController'
-        })
-        .when('/about', {
-            templateUrl: 'views/about.html'
-        })
-        .otherwise({
-            redirectTo: '/descriptions/'+ (new Date()).getFullYear() +'/CSCI'
-        });
+.config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state('state1', {
+        url: "/state1",
+        templateUrl: "partials/state1.html",
+        controller: ''
+    })
+    .state('frame', {
+        url: '/frame?page',
+        templateUrl: 'views/frame.html',
+        controller: 'FrameController'
+    })
+    .state('descriptions', {
+        url: '/descriptions/:code',
+        templateUrl: 'views/description.html',
+        controller: 'DescriptionController'
+    })
+    .state('timetables', {
+        url: '/timetables/:code',
+        templateUrl: 'views/timetable.html',
+        controller: 'TimetableController'
+    })
+    .state('about', {
+        url: '/about',
+        templateUrl: 'views/about.html'
+    })
+    $urlRouterProvider.otherwise('descriptions/');
 })
 .config(function ($httpProvider) {  
     $httpProvider.interceptors.push(["$q", "$injector", "FlashService", function ($q, $injector, FlashService) {
@@ -38,8 +42,10 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
             responseError: function (response) {
                 if (response.status === 401) {
                     $injector.get('AuthService').logout();
+                } else if (response.status === 404) {
+                    FlashService.add('Item not found', 'warning');
                 } else if (response.status === 500) {
-                    FlashService.add('An error occurred', 'danger')
+                    FlashService.add('An error occurred', 'danger');
                 }
                 return $q.reject(response);
             }
@@ -48,11 +54,5 @@ angular.module('myuow', ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'ang
 })
 .config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
-})
-.run(function ($rootScope, $location) {
-    $rootScope.$on('$routeChangeSuccess', function () {
-        $rootScope.location = $location.path();
-        ga('send', 'pageview', { page: $location.path() });
-    });
 })
 ;

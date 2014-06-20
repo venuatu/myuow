@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myuow')
-.controller('NavController', function ($rootScope, $http, AuthService, serverAddress, $location) {
+.controller('NavController', function ($rootScope, $scope, $http, AuthService, serverAddress, $location, $stateParams) {
     $rootScope.moodle = function () {
         window.open(serverAddress + '/moodle?' + AuthService.getCredentials(), "_blank");
     };
@@ -12,13 +12,18 @@ angular.module('myuow')
         AuthService.logout();
     }
 
-    $rootScope.currentYear = (new Date()).getFullYear();
+    $rootScope.year = (new Date()).getFullYear();
+    
+    $rootScope.$stateParams = $stateParams;
+    $rootScope.$on('$stateChangeSuccess', function () {
+        ga('send', 'pageview', { page: $location.path() });
+    });
 
-    $rootScope.campuses = [];
+    /*$rootScope.campuses = [];
     $http.get(serverAddress + '/campuses').then(function (data) {
         $rootScope.campuses = data.data;
         $rootScope.campus = $rootScope.campuses['Wollongong']
-    });
+    });*/
 
     $rootScope.$watch('auth.enticated', function (val, old) {
         if (val) {

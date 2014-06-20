@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('myuow')
-.directive('openIframe', function ($rootScope, $location) {
+.directive('openIframe', function ($rootScope, $state) {
     return function (scope, elem, attrs) {
         elem.on('click', function (e) {
             if (e.which === 1) {
                 e.preventDefault();
                 e.stopPropagation();
                 scope.$apply(function () {
-                    $location.path("/frame/" + encodeURIComponent(attrs.href));
+                    $state.go("frame", {page: attrs.href});
                 });
             }
         });

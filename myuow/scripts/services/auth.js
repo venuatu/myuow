@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myuow')
-.service('AuthService', function ($rootScope, $q, $http, serverAddress, $location, $modal) {
+.service('AuthService', function ($rootScope, $q, $http, serverAddress, $location, $modal, FlashService) {
 
     $rootScope.auth = {
         enticated: false,
@@ -10,7 +10,6 @@ angular.module('myuow')
     };
     this.getCredentials = function () {
         var creds = formPostEncode($rootScope.auth.credentials);
-        console.log(creds);
         return creds;
     }
     this.login = function (username, password) {
@@ -22,7 +21,7 @@ angular.module('myuow')
             if (data.status === 200) {
                 $rootScope.auth.enticated = true;
                 $rootScope.auth.credentials = data.data;
-                localStorage.credentials = JSON.stringify(data.data);
+                sessionStorage.credentials = JSON.stringify(data.data);
                 localStorage.username = $rootScope.auth.username = username;
                 q.resolve($rootScope.auth);
             } else {
@@ -35,7 +34,7 @@ angular.module('myuow')
         return q.promise;
     };
     this.logout = function () {
-        delete localStorage.credentials;
+        delete sessionStorage.credentials;
         delete localStorage.username;
         $rootScope.auth.enticated = false;
         location.href = '#/';
@@ -54,9 +53,9 @@ angular.module('myuow')
         });
     }
 
-    if (localStorage.credentials) {
+    if (sessionStorage.credentials) {
         var self = this;
-        $rootScope.auth.credentials = JSON.parse(localStorage.credentials);
+        $rootScope.auth.credentials = JSON.parse(sessionStorage.credentials);
         $rootScope.auth.username = localStorage.username;
         $rootScope.auth.enticated = true;
         $http.get(serverAddress + '/account/check?' + this.getCredentials()).then(angular.noop);

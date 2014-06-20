@@ -1,4 +1,9 @@
+<div class="modal-header">
+    <h3 class="modal-title">MyUOW SOLS login</h3>
+    <div>This will let you see more information only available from within SOLS</div>
+</div>
 <div class="modal-body">
+    <div class="alert alert-danger">You really really shouldn't give this information to third parties! (such as this site)</div>
     <div ng-show="!!reason" class="alert alert-danger">{{ reason }}</div>
     <form class="form-signin form-group" ng-class="{ 'has-error': failed }" ng-submit="login(username, password)">
         <input type="text" class="form-control" placeholder="Username? (ab812)" required autofocus ng-model="username">
