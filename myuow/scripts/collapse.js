@@ -10,12 +10,22 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
         var initialAnimSkip = false;
         var currentTransition;
         var currentInterval;
-        var startExpand;
+        var observer;
+        var animateHeight;
 
         collapseDone();
 
+        if (window.MutationObserver) {
+          observer = new MutationObserver(function(mutations) {
+            if (_.any(mutations, function (mutation) {return mutation.target !== element[0];})) {
+              watchHeight();
+            }
+          });
+        }
+
         function doTransition(change) {
           var newTransition = $transition(element, change);
+          animateHeight = parseInt(change.height, 10);
           if (currentTransition) {
             currentTransition.cancel();
           }
@@ -39,14 +49,21 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             element.removeClass('collapse').addClass('collapsing');
             doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
 
-            currentInterval = $interval(watchHeight, 1000 / 20, 5 * 20, false);
+            startExpand = Date.now();
+            if (observer) {
+              observer.observe(element[0], {
+                childList: false, attributes: true, characterData: true, subtree: true
+              });
+            } else {
+              currentInterval = $interval(watchHeight, 1000 / 15, 0, false);
+            }
           }
         }
 
         function expandDone() {
           element.removeClass('collapsing');
           element.addClass('collapse in');
-          //element.css({height: 'auto'});
+          element.css({height: 'auto'});
         }
 
         function collapse() {
@@ -64,8 +81,12 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
             doTransition({ height: 0 }).then(collapseDone);
 
-            $interval.cancel(currentInterval);
-            currentInterval = undefined;
+            if (observer) {
+              observer.disconnect();
+            } else {
+              $interval.cancel(currentInterval);
+              currentInterval = undefined;
+            }
           }
         }
 
@@ -75,13 +96,9 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
         }
 
         function watchHeight() {
-          startExpand = startExpand || Date.now();
-          if (element[0].style.height === 'auto' || (Date.now() - startExpand) > 5000) {
-            element[0].style.height = 'auto';
-            $interval.cancel(currentInterval);
-            currentInterval = startExpand = undefined;
-          } else if (element[0].scrollHeight > parseInt(element[0].style.height, 10)) {
-            element.removeClass('collapse').addClass('collapsing');
+          if (element[0].scrollHeight > animateHeight) {
+            element.removeClass('collapse').addClass('collapsing').css({height: animateHeight + 'px'});
+            var x = element[0].offsetWidth;
             doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
           }
         }
