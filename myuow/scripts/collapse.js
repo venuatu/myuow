@@ -2,7 +2,7 @@
 
 angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
-  .directive('collapse', ['$transition', '$interval', function ($transition, $interval) {
+  .directive('collapse', ['$transition', function ($transition) {
 
     return {
       link: function (scope, element, attrs) {
@@ -17,8 +17,14 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
 
         if (window.MutationObserver) {
           observer = new MutationObserver(function(mutations) {
-            if (_.any(mutations, function (mutation) {return mutation.target !== element[0];})) {
-              watchHeight();
+            var childMutated = false;
+            angular.forEach(mutations, function (mutation)  {
+              if (mutation.target !== element[0]) childMutated = true;
+            });
+            if (childMutated && element[0].scrollHeight > animateHeight) {
+              element.css({height: animateHeight + 'px'});
+              var x = element[0].offsetWidth;// trigger reflow
+              expand();
             }
           });
         }
@@ -49,13 +55,11 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             element.removeClass('collapse').addClass('collapsing');
             doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
 
-            startExpand = Date.now();
             if (observer) {
+              observer.disconnect();
               observer.observe(element[0], {
                 childList: false, attributes: true, characterData: true, subtree: true
               });
-            } else {
-              currentInterval = $interval(watchHeight, 1000 / 15, 0, false);
             }
           }
         }
@@ -72,6 +76,9 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             collapseDone();
             element.css({height: 0});
           } else {
+            if (observer) {
+              observer.disconnect();
+            }
             // CSS transitions don't work with height: auto, so we have to manually change the height to a specific value
             element.css({ height: element[0].scrollHeight + 'px' });
             //trigger reflow so a browser realizes that height was updated from auto to a specific value
@@ -80,27 +87,12 @@ angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
             element.removeClass('collapse in').addClass('collapsing');
 
             doTransition({ height: 0 }).then(collapseDone);
-
-            if (observer) {
-              observer.disconnect();
-            } else {
-              $interval.cancel(currentInterval);
-              currentInterval = undefined;
-            }
           }
         }
 
         function collapseDone() {
           element.removeClass('collapsing');
           element.addClass('collapse');
-        }
-
-        function watchHeight() {
-          if (element[0].scrollHeight > animateHeight) {
-            element.removeClass('collapse').addClass('collapsing').css({height: animateHeight + 'px'});
-            var x = element[0].offsetWidth;
-            doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
-          }
         }
 
         scope.$watch(attrs.collapse, function (shouldCollapse) {
