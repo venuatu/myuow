@@ -7,7 +7,7 @@ window.formPostEncode = function (obj) {
 }
 
 angular.module('myuow', ['ui.router', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'angular-loading-bar'])
-.constant('serverAddress', 'https://myuow.me/api/')
+.constant('serverAddress', 'https://myuow.venuatu.me/api/')
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('frame', {

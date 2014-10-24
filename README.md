@@ -1,6 +1,8 @@
-# My UoW frontend [semver](http://semver.org/) 1.0.0
+# My UoW frontend 1.1.0
 
-This is built with angularjs, bootstrap, angular-bootstrap, 
+This project is live at: https://myuow.venuatu.me/
+
+This is built with angularjs, bootstrap, angular-bootstrap, sass and traceur
 
 ## Requirements
 
