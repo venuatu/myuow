@@ -10,11 +10,6 @@ angular.module('myuow', ['ui.router', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'a
 .constant('serverAddress', 'https://myuow.me/api/')
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-    .state('state1', {
-        url: "/state1",
-        templateUrl: "partials/state1.html",
-        controller: ''
-    })
     .state('frame', {
         url: '/frame?page',
         templateUrl: 'views/frame.html',
